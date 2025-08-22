@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A clean, responsive landing page for an e‑learning platform." />
+  <title>Learnify — E‑Learning for Everyone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: #121830;
+      --panel-2: #0f152b;
+      --text: #e7ecff;
+      --muted: #a8b0d3;
+      --brand: #6c8bff;
+      --brand-2: #9ad6ff;
+      --accent: #22d3ee;
+      --ok: #10b981;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius-xl: 20px;
+      --radius-2xl: 28px;
+    }
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0; font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text); background: radial-gradient(1200px 600px at 80% -10%, rgba(108,139,255,.15), transparent 60%),
+                         radial-gradient(1000px 600px at -10% 20%, rgba(154,214,255,.10), transparent 50%), var(--bg);
+    }
+    a{ color:inherit; text-decoration:none }
+    .container{ width:min(1200px, 92%); margin-inline:auto; }
+    .btn{ display:inline-flex; align-items:center; gap:.6rem; border:1px solid transparent; padding:.9rem 1.2rem; border-radius:16px; font-weight:600; transition:.2s ease; cursor:pointer; }
+    .btn-primary{ background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#0b1020; box-shadow:var(--shadow); }
+    .btn-primary:hover{ transform:translateY(-1px); filter:saturate(1.1) }
+    .btn-ghost{ border-color:#2b335d; background:transparent; color:var(--text); }
+    .btn-ghost:hover{ background:#1b2244 }
+
+    /* Header */
+    header{ position:sticky; top:0; backdrop-filter: blur(8px); background:rgba(11,16,32,.6); border-bottom:1px solid #1d2549; z-index:50 }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding: .8rem 0; }
+    .logo{ display:flex; align-items:center; gap:.7rem; font-weight:800; letter-spacing:.2px }
+    .logo-badge{ display:grid; place-items:center; width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, var(--brand), var(--accent)); color:#0b1020; font-weight:900 }
+    .nav-links{ display:flex; gap:1rem; align-items:center }
+    .nav-links a{ padding:.6rem .8rem; border-radius:10px; color:var(--muted) }
+    .nav-links a:hover{ background:#151c39; color:var(--text) }
+    .mobile-toggle{ display:none; }
+
+    /* Hero */
+    .hero{ display:grid; grid-template-columns: 1.2fr .8fr; gap:2rem; align-items:center; padding: clamp(2rem, 3vw + 1rem, 4rem) 0 2rem; }
+    .hero h1{ font-size: clamp(2rem, 2.6vw + 1.2rem, 3.4rem); line-height:1.1; margin:.5rem 0 1rem; }
+    .hero p{ color:var(--muted); font-size: clamp(1rem, 1.1vw + .6rem, 1.15rem); }
+    .hero-card{ background:linear-gradient(180deg, rgba(108,139,255,.10), rgba(17,23,47,.7)); padding:1.2rem; border:1px solid #1f2a59; border-radius: var(--radius-2xl); box-shadow: var(--shadow); }
+    .hero-highlights{ display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; margin-top:1.2rem }
+    .pill{ background:#0f152b; border:1px solid #243067; padding:.4rem .7rem; border-radius:999px; color:#c6cffd; font-size:.9rem; }
+    .searchbar{ display:flex; gap:.6rem; padding:.5rem; background: #0e1430; border:1px solid #243067; border-radius:16px; margin:1rem 0; }
+    .searchbar input{ flex:1; background:transparent; border:none; outline:none; color:var(--text); padding:.8rem .9rem; font-size:1rem }
+
+    /* Sections */
+    section{ padding: 2rem 0; }
+    .section-title{ display:flex; align-items:end; justify-content:space-between; gap:1rem; margin-bottom:1rem }
+    .section-title h2{ margin:0; font-size:1.6rem }
+    .subtle{ color:var(--muted) }
+
+    /* Cards */
+    .grid{ display:grid; gap:1rem }
+    .grid-3{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card{ background: linear-gradient(180deg, #141b3a, #101631); border:1px solid #1f2a59; border-radius: var(--radius-xl); overflow:hidden; transition:.2s ease; }
+    .card:hover{ transform: translateY(-2px); }
+    .card-media{ aspect-ratio: 16/9; background:linear-gradient(135deg, rgba(108,139,255,.25), rgba(34,211,238,.18)); display:grid; place-items:center; font-weight:800; font-size:1.1rem; color:#0b1020 }
+    .card-body{ padding:1rem }
+    .card-title{ font-weight:700; margin-bottom:.4rem }
+    .card-meta{ display:flex; gap:.6rem; align-items:center; color:var(--muted); font-size:.9rem; margin:.4rem 0 1rem }
+
+    /* CTA band */
+    .cta{ margin: 2rem 0 3rem; padding:1.4rem; border-radius: var(--radius-2xl); display:grid; grid-template-columns: 1.1fr .9fr; gap:1.2rem; align-items:center; background: linear-gradient(90deg, rgba(108,139,255,.18), rgba(34,211,238,.14)); border:1px solid #1f2a59; }
+
+    /* Footer */
+    footer{ border-top:1px solid #1d2549; padding:2rem 0; color:var(--muted) }
+    .footer-grid{ display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap:1rem }
+    .footer-col h4{ margin:.2rem 0 .6rem; color:var(--text) }
+    .copyright{ margin-top:1.2rem; font-size:.9rem; color:#8f98c4 }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+      .cta{ grid-template-columns: 1fr; }
+      .grid-4{ grid-template-columns: repeat(2, 1fr); }
+      .footer-grid{ grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px){
+      .nav-links{ display:none }
+      .mobile-toggle{ display:inline-flex; }
+      .grid-3{ grid-template-columns: 1fr; }
+      .grid-4{ grid-template-columns: 1fr; }
+      .hero-highlights{ grid-template-columns: 1fr 1fr }
+      .footer-grid{ grid-template-columns: 1fr }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container nav">
+      <a href="#" class="logo" aria-label="Learnify home">
+        <span class="logo-badge">L</span>
+        <span>Learnify</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#courses">Courses</a>
+        <a href="#tracks">Learning Paths</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+      </nav>
+      <div style="display:flex; gap:.6rem; align-items:center">
+        <button class="btn btn-ghost mobile-toggle" aria-label="Open Menu" onclick="toggleMenu()">☰</button>
+        <button class="btn btn-ghost">Sign in</button>
+        <button class="btn btn-primary">Get Started</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Collapsible mobile menu -->
+  <div id="mobileMenu" style="display:none; border-bottom:1px solid #1d2549; background:#0b1020">
+    <div class="container" style="padding: .6rem 0 1rem">
+      <a class="btn btn-ghost" style="width:100%; justify-content:flex-start" href="#courses">Courses</a>
+      <a class="btn btn-ghost" style="width:100%; justify-content:flex-start" href="#tracks">Learning Paths</a>
+      <a class="btn btn-ghost" style="width:100%; justify-content:flex-start" href="#features">Features</a>
+      <a class="btn btn-ghost" style="width:100%; justify-content:flex-start" href="#pricing">Pricing</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <main class="container hero">
+    <div>
+      <span class="pill">🎓 1,200+ lessons • 150k learners</span>
+      <h1>Upgrade your skills with bite‑sized, hands‑on courses</h1>
+      <p>Learn at your own pace with expert‑led lessons in Programming, Data, Design, and more. Track progress, collect certificates, and build real projects.</p>
+      <div class="searchbar" role="search">
+        <input aria-label="Search courses" placeholder="Search courses: e.g., Python, HTML, UI/UX…" />
+        <button class="btn btn-primary">Search</button>
+      </div>
+      <div class="hero-highlights">
+        <div class="hero-card">
+          <div class="card-body">
+            <div class="card-title">Interactive Lessons</div>
+            <div class="subtle">Practice in your browser with instant feedback.</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="card-body">
+            <div class="card-title">Certificates</div>
+            <div class="subtle">Earn shareable certificates for each course.</div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="card-body">
+            <div class="card-title">Community</div>
+            <div class="subtle">Discuss, collaborate, and get peer support.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside>
+      <div class="card" aria-hidden="true">
+        <div class="card-media">Course Preview</div>
+        <div class="card-body">
+          <div class="card-title">Intro to Python</div>
+          <div class="card-meta">8 modules • ~6 hrs • Beginner</div>
+          <button class="btn btn-primary" style="width:100%">Start Free</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Popular Courses -->
+  <section id="courses" class="container">
+    <div class="section-title">
+      <h2>Popular Courses</h2>
+      <a class="btn btn-ghost" href="#">View all →</a>
+    </div>
+    <div class="grid grid-4">
+      <!-- Card 1 -->
+      <article class="card">
+        <div class="card-media">HTML & CSS</div>
+        <div class="card-body">
+          <div class="card-title">Modern Web Design</div>
+          <div class="card-meta">12 lessons • Beginner</div>
+          <button class="btn btn-ghost">Preview</button>
+        </div>
+      </article>
+      <!-- Card 2 -->
+      <article class="card">
+        <div class="card-media">Python</div>
+        <div class="card-body">
+          <div class="card-title">Python Fundamentals</div>
+          <div class="card-meta">16 lessons • Beginner</div>
+          <button class="btn btn-ghost">Preview</button>
+        </div>
+      </article>
+      <!-- Card 3 -->
+      <article class="card">
+        <div class="card-media">Data Viz</div>
+        <div class="card-body">
+          <div class="card-title">Data Visualization 101</div>
+          <div class="card-meta">10 lessons • Intermediate</div>
+          <button class="btn btn-ghost">Preview</button>
+        </div>
+      </article>
+      <!-- Card 4 -->
+      <article class="card">
+        <div class="card-media">UI/UX</div>
+        <div class="card-body">
+          <div class="card-title">Design for Developers</div>
+          <div class="card-meta">9 lessons • Intermediate</div>
+          <button class="btn btn-ghost">Preview</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Learning Paths / Tracks -->
+  <section id="tracks" class="container">
+    <div class="section-title">
+      <h2>Learning Paths</h2>
+      <span class="subtle">Curated roadmaps to master a discipline</span>
+    </div>
+    <div class="grid grid-3">
+      <article class="card">
+        <div class="card-body">
+          <div class="card-title">Frontend Developer</div>
+          <div class="subtle">HTML, CSS, JavaScript, React</div>
+          <div class="card-meta">~ 6 weeks • Beginner → Pro</div>
+          <button class="btn btn-primary">Start Path</button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-body">
+          <div class="card-title">Data Analyst</div>
+          <div class="subtle">Python, SQL, Dashboards</div>
+          <div class="card-meta">~ 8 weeks • Beginner → Pro</div>
+          <button class="btn btn-primary">Start Path</button>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-body">
+          <div class="card-title">UI/UX Designer</div>
+          <div class="subtle">Research, Wireframing, Prototyping</div>
+          <div class="card-meta">~ 5 weeks • Beginner → Pro</div>
+          <button class="btn btn-primary">Start Path</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Feature band -->
+  <section id="features" class="container cta" aria-label="Platform features">
+    <div>
+      <h2>Everything you need to learn and get hired</h2>
+      <p class="subtle">From bite‑sized lessons and coding sandboxes to real‑world capstones and portfolio‑ready certificates.</p>
+    </div>
+    <ul style="margin:0; padding-left:1.1rem; line-height:1.9">
+      <li>Interactive coding and quizzes</li>
+      <li>Downloadable notes & resources</li>
+      <li>Progress tracking & streaks</li>
+      <li>Career‑ready capstone projects</li>
+    </ul>
+  </section>
+
+  <!-- Pricing / CTA simple -->
+  <section id="pricing" class="container">
+    <div class="section-title">
+      <h2>Try it free, upgrade anytime</h2>
+      <span class="subtle">No credit card required for the free plan</span>
+    </div>
+    <div class="grid grid-3">
+      <article class="card" aria-label="Free plan">
+        <div class="card-body">
+          <div class="card-title">Free</div>
+          <div class="card-meta">₹0 / forever</div>
+          <ul class="subtle" style="line-height:1.9; padding-left:1.1rem">
+            <li>5 starter courses</li>
+            <li>Community access</li>
+            <li>Limited certificates</li>
+          </ul>
+          <button class="btn btn-ghost">Get Free</button>
+        </div>
+      </article>
+      <article class="card" aria-label="Pro plan">
+        <div class="card-body">
+          <div class="card-title">Pro</div>
+          <div class="card-meta">₹499 / month</div>
+          <ul class="subtle" style="line-height:1.9; padding-left:1.1rem">
+            <li>All courses & paths</li>
+            <li>Unlimited certificates</li>
+            <li>Interview prep</li>
+          </ul>
+          <button class="btn btn-primary">Go Pro</button>
+        </div>
+      </article>
+      <article class="card" aria-label="Teams plan">
+        <div class="card-body">
+          <div class="card-title">Teams</div>
+          <div class="card-meta">Custom</div>
+          <ul class="subtle" style="line-height:1.9; padding-left:1.1rem">
+            <li>Team analytics</li>
+            <li>Assignments</li>
+            <li>Admin dashboard</li>
+          </ul>
+          <button class="btn btn-ghost">Contact Sales</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:.6rem">
+          <span class="logo-badge">L</span>
+          <span>Learnify</span>
+        </div>
+        <p class="subtle">Build skills for your career with high‑quality courses and hands‑on projects.</p>
+        <p class="copyright">© <span id="y"></span> Learnify, Inc. All rights reserved.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <a class="subtle" href="#">All Courses</a><br />
+        <a class="subtle" href="#">Paths</a><br />
+        <a class="subtle" href="#">Certificates</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a class="subtle" href="#">About</a><br />
+        <a class="subtle" href="#">Careers</a><br />
+        <a class="subtle" href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a class="subtle" href="#">Help Center</a><br />
+        <a class="subtle" href="#">Contact</a><br />
+        <a class="subtle" href="#">Status</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu(){
+      var m = document.getElementById('mobileMenu');
+      m.style.display = (m.style.display === 'block') ? 'none' : 'block';
+    }
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
